@@ -1,4 +1,3 @@
-//import Rox from 'rox-react-native';
 import Rox from 'rox-browser';
 
 const Flags = {
