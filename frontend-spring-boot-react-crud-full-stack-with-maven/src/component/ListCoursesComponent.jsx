@@ -91,9 +91,11 @@ class ListCoursesComponent extends Component {
                             }
                         </tbody>
                     </table>
-                    <div className="row">
-                        <button className="btn btn-success" onClick={this.addCourseClicked}>Add</button>
-                    </div>
+                    { adminFlag ?
+                        <div className="row">
+                            <button className="btn btn-success" onClick={this.addCourseClicked}>Add</button>
+                        </div>
+                    : null }
                 </div>
             </div>
         )
