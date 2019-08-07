@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CourseDataService from '../service/CourseDataService';
+import Flags from '../flags.js';
 
 const INSTRUCTOR = 'in28minutes'
 
@@ -68,7 +69,7 @@ class CourseComponent extends Component {
     render() {
 
         let { description, id } = this.state
-
+        const adminFlag = Flags.adminControl.isEnabled();
         return (
             <div>
                 <h3>Course</h3>
@@ -92,9 +93,15 @@ class CourseComponent extends Component {
                                     </fieldset>
                                     <fieldset className="form-group">
                                         <label>Description</label>
-                                        <Field className="form-control" type="text" name="description" />
+                                        { adminFlag ?
+                                            <Field className="form-control" type="text" name="description" />
+                                        :
+                                            <Field className="form-control" type="text" name="description" disabled />
+                                        }
                                     </fieldset>
-                                    <button className="btn btn-success" type="submit">Save</button>
+                                    { adminFlag ?
+                                        <button className="btn btn-success" type="submit">Save</button>
+                                    : null }
                                 </Form>
                             )
                         }

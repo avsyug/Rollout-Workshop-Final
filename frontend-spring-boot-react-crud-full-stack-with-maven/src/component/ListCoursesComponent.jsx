@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CourseDataService from '../service/CourseDataService';
+import Flags from '../flags.js';
 
 
 const INSTRUCTOR = 'in28minutes'
@@ -53,6 +54,7 @@ class ListCoursesComponent extends Component {
 
     render() {
         console.log('render')
+        const adminFlag = Flags.adminControl.isEnabled();
         return (
             <div className="container">
                 <h3>All Courses</h3>
@@ -63,7 +65,11 @@ class ListCoursesComponent extends Component {
                             <tr>
                                 <th>Id</th>
                                 <th>Description</th>
-                                <th>Update</th>
+                                { adminFlag ?
+                                    <th>Update</th>
+                                : 
+                                    <th>View</th> 
+                                }
                                 {/*<th>Delete</th>*/}
                             </tr>
                         </thead>
@@ -74,7 +80,11 @@ class ListCoursesComponent extends Component {
                                         <tr key={course.id}>
                                             <td>{course.id}</td>
                                             <td>{course.description}</td>
-                                            <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>Update</button></td>
+                                            { adminFlag ?
+                                                <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>Update</button></td>
+                                            : 
+                                                <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>View</button></td>
+                                            }
                                             {/*<td><button className="btn btn-warning" onClick={() => this.deleteCourseClicked(course.id)}>Delete</button></td>*/}
                                         </tr>
                                 )

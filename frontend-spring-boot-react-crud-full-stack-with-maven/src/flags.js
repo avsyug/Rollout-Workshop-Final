@@ -2,7 +2,8 @@
 import Rox from 'rox-browser';
 
 const Flags = {
-	addFlag: new Rox.Flag()
+	addFlag: new Rox.Flag(),
+	adminControl: new Rox.Flag()
 }
 
 Rox.register('default', Flags);
