@@ -67,7 +67,6 @@ class CourseComponent extends Component {
     }
 
     render() {
-
         let { description, id } = this.state
         const adminFlag = Flags.adminControl.isEnabled();
         return (
