@@ -7,7 +7,7 @@ const Flags = {
 }
 
 Rox.register('default', Flags);
-Rox.setup('', {
+Rox.setup('INSERT ROLLOUT KEY HERE', {
   syncCompletionHandler: function(a){
     console.log(a.targetGroups);
     console.log(a.experiments);
