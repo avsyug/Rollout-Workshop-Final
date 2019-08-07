@@ -41,12 +41,33 @@ public class CoursesHardcodedService {
 	}
 
 	public Course save(Course course) {
-		if (course.getId() == -1 || course.getId() == 0) {
-			course.setId(++idCounter);
-			courses.add(course);
-		} else {
-			deleteById(course.getId());
-			courses.add(course);
+		FlagsContainer conf = new FlagsContainer();
+		if(conf.newSave.isEnabled()) {
+			System.out.println("Save flag is enabled");
+			List<Course> tempCourses = new ArrayList<>();
+			if (course.getId() == -1 || course.getId() == 0) {
+				for(int i=0; i<courses.size(); i++){
+					Long currId = courses.get(i).getId();
+					Long newId = currId+1;
+					courses.get(i).setId(newId);
+					tempCourses.add(courses.get(i));
+				}
+				course.setId((long) 1);
+				courses.add(0, course);
+			} else {
+				deleteById(course.getId());
+				courses.add(course);
+			}
+		}
+		else{
+			System.out.println("Save flag not enabled");
+			if (course.getId() == -1 || course.getId() == 0) {
+				course.setId(++idCounter);
+				courses.add(course);
+			} else {
+				deleteById(course.getId());
+				courses.add(course);
+			}
 		}
 		return course;
 	}

@@ -7,4 +7,5 @@ import java.util.concurrent.ExecutionException;
 
 public class FlagsContainer implements RoxContainer {
 	public RoxFlag addFlag = new RoxFlag();
+	public RoxFlag newSave = new RoxFlag(true);
 }
