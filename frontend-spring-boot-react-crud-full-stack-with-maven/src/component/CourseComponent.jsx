@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CourseDataService from '../service/CourseDataService';
-import Flags from '../flags.js';
 
 const INSTRUCTOR = 'in28minutes'
-
 
 class CourseComponent extends Component {
     constructor(props) {
@@ -21,6 +19,8 @@ class CourseComponent extends Component {
     }
 
     componentDidMount() {
+
+        console.log(this.state.id)
 
         // eslint-disable-next-line
         if (this.state.id == -1) {
@@ -66,49 +66,43 @@ class CourseComponent extends Component {
     }
 
     render() {
-        const adminFlag = Flags.adminControl.isEnabled();
+
         let { description, id } = this.state
-            return (
-                <div>
-                    <h3>Course</h3>
-                    <div className="container">
-                        <Formik
-                            initialValues={{ id, description }}
-                            onSubmit={this.onSubmit}
-                            validateOnChange={false}
-                            validateOnBlur={false}
-                            validate={this.validate}
-                            enableReinitialize={true}
-                        >
-                            {
-                                (props) => (
-                                    <Form>
-                                        <ErrorMessage name="description" component="div"
-                                            className="alert alert-warning" />
-                                        <fieldset className="form-group">
-                                            <label>Id</label>
-                                            <Field className="form-control" type="text" name="id" disabled />
-                                        </fieldset>
-                                        <fieldset className="form-group">
-                                            <label>Description</label>
-                                            { adminFlag ?
-                                                <Field className="form-control" type="text" name="description" />
-                                            :
-                                                <Field className="form-control" type="text" name="description" disabled />
-                                            }
-                                        </fieldset>
-                                        { adminFlag ?
-                                            <button className="btn btn-success" type="submit">Save</button>
-                                        : null }
-                                    </Form>
-                                )
-                            }
-                        </Formik>
 
-                    </div>
+        return (
+            <div>
+                <h3>Course</h3>
+                <div className="container">
+                    <Formik
+                        initialValues={{ id, description }}
+                        onSubmit={this.onSubmit}
+                        validateOnChange={false}
+                        validateOnBlur={false}
+                        validate={this.validate}
+                        enableReinitialize={true}
+                    >
+                        {
+                            (props) => (
+                                <Form>
+                                    <ErrorMessage name="description" component="div"
+                                        className="alert alert-warning" />
+                                    <fieldset className="form-group">
+                                        <label>Id</label>
+                                        <Field className="form-control" type="text" name="id" disabled />
+                                    </fieldset>
+                                    <fieldset className="form-group">
+                                        <label>Description</label>
+                                        <Field className="form-control" type="text" name="description" />
+                                    </fieldset>
+                                    <button className="btn btn-success" type="submit">Save</button>
+                                </Form>
+                            )
+                        }
+                    </Formik>
+
                 </div>
-            )
-
+            </div>
+        )
     }
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import CourseDataService from '../service/CourseDataService';
-import Flags from '../flags.js';
+
 
 const INSTRUCTOR = 'in28minutes'
 
@@ -11,7 +11,7 @@ class ListCoursesComponent extends Component {
             courses: [],
             message: null
         }
-        this.deleteCourseClicked = this.deleteCourseClicked.bind(this)
+        //this.deleteCourseClicked = this.deleteCourseClicked.bind(this)
         this.updateCourseClicked = this.updateCourseClicked.bind(this)
         this.addCourseClicked = this.addCourseClicked.bind(this)
         this.refreshCourses = this.refreshCourses.bind(this)
@@ -31,16 +31,16 @@ class ListCoursesComponent extends Component {
             )
     }
 
-    deleteCourseClicked(id) {
-        CourseDataService.deleteCourse(INSTRUCTOR, id)
-            .then(
-                response => {
-                    this.setState({ message: `Delete of course ${id} Successful` })
-                    this.refreshCourses()
-                }
-            )
+    // deleteCourseClicked(id) {
+    //     CourseDataService.deleteCourse(INSTRUCTOR, id)
+    //         .then(
+    //             response => {
+    //                 this.setState({ message: `Delete of course ${id} Successful` })
+    //                 this.refreshCourses()
+    //             }
+    //         )
 
-    }
+    // }
 
     addCourseClicked() {
         this.props.history.push(`/courses/-1`)
@@ -53,61 +53,40 @@ class ListCoursesComponent extends Component {
 
     render() {
         console.log('render')
-        const multiFlag = Flags.multiFlag.isEnabled();
-        const adminFlag = Flags.adminControl.isEnabled();
-        console.log('MultiFlag: '+multiFlag);
-            return (
+        return (
+            <div className="container">
+                <h3>All Courses</h3>
+                {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
                 <div className="container">
-                    <h3>All Courses</h3>
-                    {this.state.message && <div class="alert alert-success">{this.state.message}</div>}
-                    <div className="container">
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Description</th>
-                                    { adminFlag ?
-                                        <th>Update</th>
-                                    : 
-                                        <th>View</th> 
-                                    }
-                                    { multiFlag ?
-                                        <th>Delete</th>
-                                    : null }
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    this.state.courses.map(
-                                        course =>
-                                            <tr key={course.id}>
-                                                <td>{course.id}</td>
-                                                <td>{course.description}</td>
-                                                { adminFlag ?
-                                                    <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>Update</button></td>
-                                                : 
-                                                    <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>View</button></td>
-                                                }
-                                                { multiFlag ?
-                                                    <td><button className="btn btn-warning" onClick={() => this.deleteCourseClicked(course.id)}>Delete</button></td>
-                                                : 
-                                                    null 
-                                                }
-                                            </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
-                        { adminFlag ?
-                        <div className="row">
-                            <button className="btn btn-success" onClick={this.addCourseClicked}>Add</button>
-                        </div>
-                        : null }
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Description</th>
+                                <th>Update</th>
+                                {/*<th>Delete</th>*/}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                this.state.courses.map(
+                                    course =>
+                                        <tr key={course.id}>
+                                            <td>{course.id}</td>
+                                            <td>{course.description}</td>
+                                            <td><button className="btn btn-success" onClick={() => this.updateCourseClicked(course.id)}>Update</button></td>
+                                            {/*<td><button className="btn btn-warning" onClick={() => this.deleteCourseClicked(course.id)}>Delete</button></td>*/}
+                                        </tr>
+                                )
+                            }
+                        </tbody>
+                    </table>
+                    <div className="row">
+                        <button className="btn btn-success" onClick={this.addCourseClicked}>Add</button>
                     </div>
                 </div>
-            )
-
-
+            </div>
+        )
     }
 }
 
