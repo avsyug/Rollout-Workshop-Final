@@ -55,7 +55,6 @@ class ListCoursesComponent extends Component {
         console.log('render')
         const multiFlag = Flags.multiFlag.isEnabled();
         const adminFlag = Flags.adminControl.isEnabled();
-        console.log('MultiFlag: '+multiFlag);
             return (
                 <div className="container">
                     <h3>All Courses</h3>
