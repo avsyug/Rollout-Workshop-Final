@@ -1,26 +1,12 @@
-FROM node:10.9.0-alpine
+FROM node:10.9.0-alpine as build
+WORKDIR /usr/src/app
+COPY package*.json ./
 
-RUN npm install express
+RUN npm install -g express
 RUN npm install pug --save
 
-ARG buildNumber="NOT_SET"
-ARG shortCommit="NOT_SET"
-ARG commitAuthor="NOT_SET"
-ARG context
+EXPOSE 3000
 
-LABEL net.beedemo.workshop.build.number=$buildNumber
-LABEL net.beedemo.workshop.commit=$shortCommit
-LABEL net.beedemo.workshop.commit.author=$commitAuthor
-LABEL net.beedemo.workshop.app.name=$context
+COPY . ./
 
-ENV BUILD_NUMBER $buildNumber
-ENV SHORT_COMMIT $shortCommit
-ENV COMMIT_AUTHOR $commitAuthor
-ENV CONTEXT $context
-
-EXPOSE 8080
-
-COPY public ./public
-COPY src ./src
-
-CMD npm start
+CMD npm run build
